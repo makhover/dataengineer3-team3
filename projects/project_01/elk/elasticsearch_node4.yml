@@ -1,0 +1,17 @@
+cluster.name: es-cluster-team3
+node.name: node-4
+network.host: 0.0.0.0
+http.port: 9200
+discovery.zen.ping.unicast.hosts: ["node1.europe-west1-b.c.sharp-bulwark-218718.internal","node2.europe-west2-b.c.sharp-bulwark-218718.internal", "node3.europe-west1-b.c.sharp-bulwark-218718.internal", "node4.europe-west2-b.c.sharp-bulwark-218718.internal"]
+
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+
+#node.attr.rack: r1
+
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+#discovery.zen.minimum_master_nodes: 
+#node.master: true
+#node.data: true
