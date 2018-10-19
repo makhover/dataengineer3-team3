@@ -8,6 +8,7 @@ es = Elasticsearch('146.148.2.191', port=9200)
 def home():
     return render_template('search.html')
 
+
 @app.route('/search/results', methods=['GET', 'POST'])
 def search_request():
     search_term = request.form["input"]

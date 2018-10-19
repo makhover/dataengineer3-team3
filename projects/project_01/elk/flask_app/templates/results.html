@@ -41,7 +41,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Source</th>
         <th>Title</th>
         <th>Summary</th>
       </tr>
@@ -50,8 +49,6 @@
 {% for hit in res['hits']['hits'] %}
     <tbody>
       <tr>
-        <th scope="row">{{ hit['_source']['timestamp'] }}</th>
-          <td>{{ hit['_index'] }}</td>
           <td><b>{{ hit['_source']['title'] }}</b></td>
           <td>{{ hit['_source']['summary_processed'] }}</td>
       </tr>
