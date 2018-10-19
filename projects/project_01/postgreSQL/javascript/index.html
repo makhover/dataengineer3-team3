@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search demo site</title>
+</head>
+<body>
+<h1>Elasticsearch client side demo</h1>
+<div id="search_container">
+    <label for"search">Search</label>
+    <input type="text" id="search"/>
+    <input type="submit" onclick="doSearch(document.getElementById('search').value);"/>
+</div>
+<div id="total"></div>
+<div id="hits"></div>
+<script type="application/javascript">
+  function doSearch (needle) {
+    var searchHost = 'http://35.240.65.74:9010/query';
+    var body = {
+      'size': 10
+    };
+    if (needle.length !== 0) {
+      var query = {
+            'query': needle
+          }
+      }
+      body.query = query;
+    }
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('POST', searchHost, false);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xmlHttp.send(JSON.stringify(body));
+    var response = JSON.parse(xmlHttp.responseText);
+
+    // Print results on screen.
+    var output = '';
+    for (var i = 0; i < response.hits.hits.length; i++) {
+      output += '<h3>' + response.hits.hits[i]._source.title + '</h3>';
+      output += response.hits.hits[i]._source.summary_processed[0] + '</br>';
+    }
+    document.getElementById('total').innerHTML = '<h2>Showing ' + response.hits.hits.length + ' results</h2>';
+    document.getElementById('hits').innerHTML = output;
+  }
+  doSearch('');
+</script>
+</body>
+</html>
