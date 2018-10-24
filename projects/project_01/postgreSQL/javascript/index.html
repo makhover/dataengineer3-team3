@@ -15,31 +15,32 @@
 <div id="hits"></div>
 <script type="application/javascript">
   function doSearch (needle) {
-    var searchHost = 'http://35.240.65.74:9010/query';
+    //var searchHost = 'http://35.240.65.74:9010/query';
     if (needle.length !== 0) {
-        //var sql = "select * from search_item('" + needle + "')";
-        var sql = "select title, annotation from item_details_full f limit 1"
-        var query = {
-            "query": sql
-            }
+        var searchLink = 'http://35.240.65.74:3000/rpc/search_item?token='+encodeURIComponent(needle)+'&limit=5';
       }
+    else {
+        var searchLink = 'http://35.240.65.74:3000/items?select=title,annotation&limit=5';
+    }
 
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('POST', searchHost, false);
-    xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    var url = JSON.stringify(query)
-    alert(url)
-    xmlHttp.send(url);
+    xmlHttp.open('GET', searchLink, false);
+    //xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    //var url = JSON.stringify(query)
+    //alert(url)
+    //xmlHttp.send(url);
+    xmlHttp.send();
     var response = JSON.parse(xmlHttp.responseText);
 
     // Print results on screen.
     var output = '';
+    var output = '';
     for (var i = 0; i < response.length; i++) {
-      output += '<h3>' + response[i]._source.title + '</h3>';
-      // output += response[i]._source.summary_processed[0] + '</br>';
-    }
-    document.getElementById('total').innerHTML = '<h2>Showing ' + response.length + ' results</h2>';
-    document.getElementById('hits').innerHTML = output;
+       output += '<h3>' + response[i].name + '</h3>';
+       output += response[i].annotation + '</br>';
+     }
+     document.getElementById('total').innerHTML = '<h2>Showing ' + response.length + ' results</h2>';
+     document.getElementById('hits').innerHTML = output;
   };
 </script>
 </body>
